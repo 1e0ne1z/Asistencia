@@ -60,7 +60,7 @@ export default function NavBar() {
                         <a href="#">Inicio</a>
                     </li>
                     <li className="text-gray-200 hover:text-blue-600">
-                        <a href="#">Reportes</a>
+                        <a href="/reports">Reportes</a>
                     </li>
                 </ul>
               </div>
