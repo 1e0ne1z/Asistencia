@@ -1,5 +1,5 @@
 node_modules
-
+app/tailwind.css
 /.cache
 /public/build
 /.netlify
