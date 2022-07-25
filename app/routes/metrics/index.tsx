@@ -28,24 +28,9 @@ export const action: ActionFunction = async ({ request }) => {
   
 }
 
-export default function IndexReports() {
+export default function IndexMetrics() {
   
   let {reportes, leaders, date} = useLoaderData();
-  let totalSiervos=0;
-  let asistencia=0;
-  if(Object.keys(reportes).length > 0){
-    Object.keys(reportes).map(gk => {
-      totalSiervos = totalSiervos + Object.keys(reportes[`${gk}`]).filter(k => (k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha')).length;
-      Object.keys(reportes[`${gk}`]).filter(k => (k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha')).map(sk => {
-        if(reportes[`${gk}`][sk] === 'Asistió'){
-          asistencia = asistencia + 1;
-        }
-      })
-    });
-    let coordinadores=Object.keys(reportes).length;
-    totalSiervos = totalSiervos + coordinadores;
-    asistencia = asistencia + coordinadores;
-  }
   
   return (
     <div className="container mx-auto rounded-lg mt-10">
@@ -71,17 +56,14 @@ export default function IndexReports() {
       </div>
       {Object.keys(reportes).length > 0 && 
         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          <h1 className="text-2xl">Reporte de privilegio de fecha {date}</h1>
+          <h1 className="text-2xl">Detalle de reporte de fecha {date}</h1>
           <h2 className="text-xl"><span className="bold">Encargados:</span> {leaders['Encargado1']}, {leaders['Encargado2']}</h2>
-          <h2 className="text-xl"><span className="bold">Total de siervos</span> {totalSiervos}</h2>
-          <h2 className="text-xl"><span className="bold">Siervos que asistieron</span> {asistencia} ({Math.floor((asistencia/totalSiervos)*100)}%)</h2>
           <br />
           {Object.keys(reportes).map(grupoID => (
             <div key={grupoID}>
               <h2 className="text-xl">Grupo {grupoID}</h2>
               <h3>Coordinador: {leaders[`${grupoID}`]}</h3>
               <h3>Ubicacion: {Object.keys(reportes[`${grupoID}`]).includes("Ubicación") ? reportes[`${grupoID}`]["Ubicación"] : 'NA'}</h3>
-              <h3>Pueblo: {Object.keys(reportes[`${grupoID}`]).includes("Conteo Pueblo") ? reportes[`${grupoID}`]["Conteo Pueblo"] : '0'}</h3>
               <table className="text-center mb-5 mt-2">
                   <thead className="border-b bg-zinc-600 text-white">
                     <tr>
@@ -91,15 +73,19 @@ export default function IndexReports() {
                     </tr>
                   </thead>
                   <tbody>
-                    {Object.keys(reportes[`${grupoID}`]).filter(k => (k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha')).map((k, index) => (
+                    {Object.keys(reportes[`${grupoID}`]).map((k, index) => {
+                      if(k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha'){
+                        return (
                           <>
                             <tr key={k} className={reportes[`${grupoID}`][k] !== 'Asistió' ? `bg-red-100` : 'bg-green-100'}>
-                              <td className="border border-gray-300 py-2 my-4 mx-6 w-10">{index + 1}</td>
+                              <td className="border border-gray-300 py-2 my-4 mx-6 w-10">{index+1}</td>
                               <td className="border border-gray-300 py-2 my-4 mx-6 w-60">{k}</td>
                               <td className="border border-gray-300 py-2 my-4 mx-6 w-40">{reportes[`${grupoID}`][k]}</td>
                             </tr>
                           </>
-                        ))}
+                        )
+                      }
+                    })}
                   </tbody>
               </table>
             </div>
