@@ -1,6 +1,7 @@
 import { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { useEffect, useState } from "react";
+import { VictoryPie } from "victory";
 import getLeaders from "~/functions/getLeaders";
 import getReport from "~/functions/getReport";
 
@@ -74,37 +75,21 @@ export default function IndexMetrics() {
           <h1 className="text-2xl">Detalle de reporte de fecha {date}</h1>
           <h2 className="text-xl"><span className="bold">Encargados:</span> {leaders['Encargado1']}, {leaders['Encargado2']}</h2>
           <br />
-          {Object.keys(reportes).map(grupoID => (
-            <div key={grupoID}>
-              <h2 className="text-xl">Grupo {grupoID}</h2>
-              <h3>Coordinador: {leaders[`${grupoID}`]}</h3>
-              <h3>Ubicacion: {Object.keys(reportes[`${grupoID}`]).includes("Ubicación") ? reportes[`${grupoID}`]["Ubicación"] : 'NA'}</h3>
-              <table className="text-center mb-5 mt-2">
-                  <thead className="border-b bg-zinc-600 text-white">
-                    <tr>
-                      <th className="w-20">#</th>
-                      <th className="border border-gray-300 text-theme-1 font-semibold text-md my-5 w-40">Siervo</th>
-                      <th className="border border-gray-300 text-theme-1 font-semibold text-md my-5 w-40">Asistencia</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {Object.keys(reportes[`${grupoID}`]).map((k, index) => {
-                      if(k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha'){
-                        return (
-                          <>
-                            <tr key={k} className={reportes[`${grupoID}`][k] !== 'Asistió' ? `bg-red-100` : 'bg-green-100'}>
-                              <td className="border border-gray-300 py-2 my-4 mx-6 w-10">{index+1}</td>
-                              <td className="border border-gray-300 py-2 my-4 mx-6 w-60">{k}</td>
-                              <td className="border border-gray-300 py-2 my-4 mx-6 w-40">{reportes[`${grupoID}`][k]}</td>
-                            </tr>
-                          </>
-                        )
-                      }
-                    })}
-                  </tbody>
-              </table>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="border border-gray-300 rounded">
+                <p className="border border-gray-300 text-center m-10"> 1: Asistencia ({asistencia}), 2: Ausencia ({totalSiervos-asistencia})</p>
+              
+              <VictoryPie
+                colorScale={["tomato", "navy" ]}
+                data={[
+                  { x: "1", y: asistencia },
+                  { x: "2", y: (totalSiervos-asistencia) },
+                ]}
+              />
+              
+              <br />
             </div>
-          ))}
+          </div>
         </div>
       }
       

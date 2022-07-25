@@ -115,6 +115,7 @@ export default function IndexReports() {
                         ))}
                   </tbody>
               </table>
+              <br />
             </div>
           ))}
         </div>
