@@ -33,15 +33,27 @@ export default function IndexReports() {
   let {reportes, leaders, date} = useLoaderData();
   let totalSiervos=0;
   let asistencia=0;
+  let tempTotal=0;
+  let tempAsistencia=0;
+  let grupos: any = {};
   if(Object.keys(reportes).length > 0){
     Object.keys(reportes).map(gk => {
+      tempAsistencia = 0;
       totalSiervos = totalSiervos + Object.keys(reportes[`${gk}`]).filter(k => (k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha')).length;
       Object.keys(reportes[`${gk}`]).filter(k => (k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha')).map(sk => {
         if(reportes[`${gk}`][sk] === 'Asistió'){
           asistencia = asistencia + 1;
+          tempAsistencia = tempAsistencia + 1;
         }
-      })
+      });
+      tempTotal = Object.keys(reportes[`${gk}`]).filter(k => (k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha')).length;
+      grupos[gk] = {
+        siervos: tempTotal,
+        asistencia: tempAsistencia,
+        porcentaje: Math.floor((tempAsistencia/tempTotal)*100)
+      };
     });
+    
     let coordinadores=Object.keys(reportes).length;
     totalSiervos = totalSiervos + coordinadores;
     asistencia = asistencia + coordinadores;
@@ -72,9 +84,9 @@ export default function IndexReports() {
       {Object.keys(reportes).length > 0 && 
         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <h1 className="text-2xl">Reporte de privilegio de fecha {date}</h1>
-          <h2 className="text-xl"><span className="bold">Encargados:</span> {leaders['Encargado1']}, {leaders['Encargado2']}</h2>
-          <h2 className="text-xl"><span className="bold">Total de siervos</span> {totalSiervos}</h2>
-          <h2 className="text-xl"><span className="bold">Siervos que asistieron</span> {asistencia} ({Math.floor((asistencia/totalSiervos)*100)}%)</h2>
+          <h2 className="text-xl"><span className="font-bold">Encargados:</span> {leaders['Encargado1']}, {leaders['Encargado2']}</h2>
+          <h2 className="text-xl"><span className="font-bold">Total de siervos: </span> {totalSiervos}</h2>
+          <h2 className="text-xl"><span className="font-bold">Siervos que asistieron: </span> {asistencia} ({Math.floor((asistencia/totalSiervos)*100)}%)</h2>
           <br />
           {Object.keys(reportes).map(grupoID => (
             <div key={grupoID}>
@@ -82,6 +94,7 @@ export default function IndexReports() {
               <h3>Coordinador: {leaders[`${grupoID}`]}</h3>
               <h3>Ubicacion: {Object.keys(reportes[`${grupoID}`]).includes("Ubicación") ? reportes[`${grupoID}`]["Ubicación"] : 'NA'}</h3>
               <h3>Pueblo: {Object.keys(reportes[`${grupoID}`]).includes("Conteo Pueblo") ? reportes[`${grupoID}`]["Conteo Pueblo"] : '0'}</h3>
+              <h3>Asistencia: {grupos[`${grupoID}`].asistencia} ({grupos[`${grupoID}`].porcentaje}%)</h3>
               <table className="text-center mb-5 mt-2">
                   <thead className="border-b bg-zinc-600 text-white">
                     <tr>

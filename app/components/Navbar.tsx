@@ -57,10 +57,10 @@ export default function NavBar() {
                 >
                 <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
                     <li className="text-gray-200 hover:text-blue-600">
-                        <a href="#">Inicio</a>
+                        <a href="/reports">Reportes</a>
                     </li>
                     <li className="text-gray-200 hover:text-blue-600">
-                        <a href="/reports">Reportes</a>
+                        <a href="/metrics">Metricas</a>
                     </li>
                 </ul>
               </div>

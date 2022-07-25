@@ -31,6 +31,21 @@ export const action: ActionFunction = async ({ request }) => {
 export default function IndexMetrics() {
   
   let {reportes, leaders, date} = useLoaderData();
+  let totalSiervos=0;
+  let asistencia=0;
+  if(Object.keys(reportes).length > 0){
+    Object.keys(reportes).map(gk => {
+      totalSiervos = totalSiervos + Object.keys(reportes[`${gk}`]).filter(k => (k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha')).length;
+      Object.keys(reportes[`${gk}`]).filter(k => (k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha')).map(sk => {
+        if(reportes[`${gk}`][sk] === 'Asistió'){
+          asistencia = asistencia + 1;
+        }
+      })
+    });
+    let coordinadores=Object.keys(reportes).length;
+    totalSiervos = totalSiervos + coordinadores;
+    asistencia = asistencia + coordinadores;
+  }
   
   return (
     <div className="container mx-auto rounded-lg mt-10">
