@@ -1,6 +1,7 @@
 import { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { useEffect, useState } from "react";
+import { VictoryPie } from "victory";
 import getLeaders from "~/functions/getLeaders";
 import getReport from "~/functions/getReport";
 
@@ -78,13 +79,13 @@ export default function IndexMetrics() {
             <div className="border border-gray-300 rounded">
                 <p className="border border-gray-300 text-center m-10"> 1: Asistencia ({asistencia}), 2: Ausencia ({totalSiervos-asistencia})</p>
               
-              {/* <VictoryPie
+              <VictoryPie
                 colorScale={["tomato", "navy" ]}
                 data={[
                   { x: "1", y: asistencia },
                   { x: "2", y: (totalSiervos-asistencia) },
                 ]}
-              /> */}
+              />
               
               <br />
             </div>
