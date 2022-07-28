@@ -30,10 +30,15 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function IndexMetrics() {
-  
+  type pie_type = {
+    x: string,
+    y: number
+  }
   let {reportes, leaders, date} = useLoaderData();
   let totalSiervos=0;
   let asistencia=0;
+  let faltas: any = {};
+  let faltas_pie: pie_type[] = []
   if(Object.keys(reportes).length > 0){
     Object.keys(reportes).map(gk => {
       totalSiervos = totalSiervos + Object.keys(reportes[`${gk}`]).filter(k => (k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha')).length;
@@ -41,8 +46,20 @@ export default function IndexMetrics() {
         if(reportes[`${gk}`][sk] === 'Asistió'){
           asistencia = asistencia + 1;
         }
+        if(reportes[`${gk}`][sk] !== 'Asistió'){
+          if((reportes[`${gk}`][sk] in faltas)){
+            faltas[reportes[`${gk}`][sk]] += 1;
+          } else {
+            faltas[reportes[`${gk}`][sk]] = 1;
+          }
+        }
       })
     });
+
+    Object.keys(faltas).map((fk, index) => {
+      faltas_pie.push({ x: `${ index + 1 }`, y: faltas[fk] })
+    });
+    console.log(faltas)
     let coordinadores=Object.keys(reportes).length;
     totalSiervos = totalSiervos + coordinadores;
     asistencia = asistencia + coordinadores;
@@ -75,8 +92,8 @@ export default function IndexMetrics() {
           <h1 className="text-2xl">Detalle de reporte de fecha {date}</h1>
           <h2 className="text-xl"><span className="bold">Encargados:</span> {leaders['Encargado1']}, {leaders['Encargado2']}</h2>
           <br />
-          <div className="grid grid-cols-2 gap-2">
-            <div className="border border-gray-300 rounded">
+          <div className="md:flex md:justify-center">
+            <div className="border border-gray-300 rounded lg:w-1/2 m-5 sm:w-auto">
                 <p className="border border-gray-300 text-center m-10"> 1: Asistencia ({asistencia}), 2: Ausencia ({totalSiervos-asistencia})</p>
               
               <VictoryPie
@@ -86,7 +103,16 @@ export default function IndexMetrics() {
                   { x: "2", y: (totalSiervos-asistencia) },
                 ]}
               />
+              <br />
+            </div>
+
+            <div className="border border-gray-300 rounded lg:w-1/2">
+                <p className="border border-gray-300 text-center m-10">{Object.keys(faltas).map((fk, index) => <><span>{index + 1}. {fk}</span>, </>)}</p>
               
+              <VictoryPie
+                
+                data={faltas_pie}
+              />
               <br />
             </div>
           </div>
