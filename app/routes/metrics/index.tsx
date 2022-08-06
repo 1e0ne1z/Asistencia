@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { VictoryPie } from "victory";
 import getLeaders from "~/functions/getLeaders";
 import getReport from "~/functions/getReport";
+import getServices from "~/functions/getServices";
 
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -13,9 +14,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   
   const date: string = url.searchParams.get("date") || "";
-  const service: string = url.searchParams.get("service") || "";
+  const service: string = url.searchParams.get("servicio") || "";
   var reportes: reportesType = {};
   let leaders = await getLeaders();
+  let services = await getServices();
   if(date.length > 0){
     let grupos: string[] = (process.env.GRUPOS)?.split(",")!;
     for await (const grupo of grupos){
