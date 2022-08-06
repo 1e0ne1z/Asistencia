@@ -1,10 +1,13 @@
 export default async function getReport(
   groupID: string, 
-  date: string
+  date: string,
+  service: string
 ) {
   const headers = {
     'Authorization': `Bearer ${process.env.API_KEY}`,
   }
+
+  console.log(service);
 
   // console.log(`${process.env.AIRTABLE_URL}${groupID}?maxRecords=10&view=Grid%20view`);
   // console.log(`HEADERS: ${JSON.stringify(headers)}`);
@@ -16,7 +19,7 @@ export default async function getReport(
   
   let report={}
   // console.log(`GRUPO${groupID}`);
-  const filtered = group.records.filter((grupo: any) => grupo.fields.Fecha === date);
+  const filtered = group.records.filter((grupo: any) => grupo.fields.Fecha === date && grupo.fields.Servicio === service);
   if(filtered.length > 0){
     report = filtered[0].fields;
   }

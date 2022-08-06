@@ -13,12 +13,13 @@ export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   
   const date: string = url.searchParams.get("date") || "";
+  const service: string = url.searchParams.get("service") || "";
   var reportes: reportesType = {};
   let leaders = await getLeaders();
   if(date.length > 0){
     let grupos: string[] = (process.env.GRUPOS)?.split(",")!;
     for await (const grupo of grupos){
-      let reporte = await getReport(grupo, date);
+      let reporte = await getReport(grupo, date, service);
       reportes[`${grupo}`] = reporte;
     }
   } 
