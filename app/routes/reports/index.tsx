@@ -50,14 +50,14 @@ export default function IndexReports() {
   if(Object.keys(reportes).length > 0){
     Object.keys(reportes).map(gk => {
       tempAsistencia = 0;
-      totalSiervos = totalSiervos + Object.keys(reportes[`${gk}`]).filter(k => (k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha')).length;
-      Object.keys(reportes[`${gk}`]).filter(k => (k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha')).map(sk => {
+      totalSiervos = totalSiervos + Object.keys(reportes[`${gk}`]).filter(k => (k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha' && k !== 'Servicio')).length;
+      Object.keys(reportes[`${gk}`]).filter(k => (k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha' && k !== 'Servicio')).map(sk => {
         if(reportes[`${gk}`][sk] === 'Asistió'){
           asistencia = asistencia + 1;
           tempAsistencia = tempAsistencia + 1;
         }
       });
-      tempTotal = Object.keys(reportes[`${gk}`]).filter(k => (k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha')).length;
+      tempTotal = Object.keys(reportes[`${gk}`]).filter(k => (k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha' && k !== 'Servicio')).length;
       grupos[gk] = {
         siervos: tempTotal,
         asistencia: tempAsistencia,
