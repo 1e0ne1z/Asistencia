@@ -135,7 +135,7 @@ export default function IndexReports() {
                   <tbody key={grupoID}>
                     {Object.keys(reportes[`${grupoID}`]).filter(k => (k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha' && k !== 'Servicio')).map((k, index) => (
                           <>
-                            <tr key={k} className={reportes[`${grupoID}`][k] !== 'Asistió' ? `bg-red-100` : 'bg-green-100'}>
+                            <tr key={k} className={reportes[`${grupoID}`][k] !== 'Asistió' ? `bg-red-100 text-red-800` : 'bg-green-100 text-green-800'}>
                               <td className="border border-gray-300 py-2 my-4 mx-6 w-10">{index + 1}</td>
                               <td className="border border-gray-300 py-2 my-4 mx-6 w-60">{k}</td>
                               <td className="border border-gray-300 py-2 my-4 mx-6 w-40">{reportes[`${grupoID}`][k]}</td>
