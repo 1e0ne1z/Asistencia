@@ -11,7 +11,7 @@ export default async function getReport(
 
   // console.log(`${process.env.AIRTABLE_URL}${groupID}?maxRecords=10&view=Grid%20view`);
   // console.log(`HEADERS: ${JSON.stringify(headers)}`);
-  const group_response = await fetch(`${process.env.AIRTABLE_URL}/Grupo%20${groupID}?maxRecords=10&view=Grid%20view`,{
+  const group_response = await fetch(`${process.env.AIRTABLE_URL}/Grupo%20${groupID}?maxRecords=50&view=Grid%20view`,{
     headers
   });
 
