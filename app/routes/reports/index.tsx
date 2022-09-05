@@ -37,6 +37,7 @@ export default function IndexReports() {
   let totalSiervos=0;
   let asistencia=0;
   let tempTotal=0;
+  let asistenciaPueblo: number = 0;
   let tempAsistencia=0;
   let grupos: any = {};
 
@@ -58,6 +59,9 @@ export default function IndexReports() {
         }
       });
       tempTotal = Object.keys(reportes[`${gk}`]).filter(k => (k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha' && k !== 'Servicio')).length;
+      if(reportes[`${gk}`]['Conteo Pueblo'] !== undefined) {
+        asistenciaPueblo = asistenciaPueblo + parseInt(reportes[`${gk}`]['Conteo Pueblo']);
+      }
       grupos[gk] = {
         siervos: tempTotal,
         asistencia: tempAsistencia,
@@ -109,6 +113,7 @@ export default function IndexReports() {
           <h1 className="text-2xl">Reporte de privilegio de fecha {date}</h1>
           <h2 className="text-xl"><span className="font-bold">Ayudas:</span> {leaders['Ayuda1']}, {leaders['Ayuda2']}</h2>
           <h2 className="text-xl"><span className="font-bold">Encargados:</span> {leaders['Encargado1']}, {leaders['Encargado2']}</h2>
+          <h2 className="text-xl"><span className="font-bold">Asistencia de pueblo: </span> {asistenciaPueblo}</h2>
           <h2 className="text-xl"><span className="font-bold">Total de siervos: </span> {totalSiervos}</h2>
           <h2 className="text-xl"><span className="font-bold">Siervos que asistieron: </span> {asistencia} ({Math.floor((asistencia/totalSiervos)*100)}%)</h2>
           <br />
