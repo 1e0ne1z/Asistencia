@@ -117,14 +117,14 @@ export default function IndexReports() {
           <h2 className="text-xl"><span className="font-bold">Total de siervos: </span> {totalSiervos}</h2>
           <h2 className="text-xl"><span className="font-bold">Siervos que asistieron: </span> {asistencia} ({Math.floor((asistencia/totalSiervos)*100)}%)</h2>
           <br />
-          {Object.keys(reportes).map(grupoID => (
+          {Object.keys(reportes).map((grupoID, indx) => (
             <div key={grupoID}>
               <h2 className="text-xl">Grupo {grupoID}</h2>
               <h3>Coordinador: {leaders[`${grupoID}`]}</h3>
               <h3>Ubicacion: {Object.keys(reportes[`${grupoID}`]).includes("Ubicación") ? reportes[`${grupoID}`]["Ubicación"] : 'NA'}</h3>
               <h3>Pueblo: {Object.keys(reportes[`${grupoID}`]).includes("Conteo Pueblo") ? reportes[`${grupoID}`]["Conteo Pueblo"] : '0'}</h3>
               <h3>Asistencia: {grupos[`${grupoID}`].asistencia} ({grupos[`${grupoID}`].porcentaje}%)</h3>
-              <table className="text-center mb-5 mt-2">
+              <table key={grupoID} className="text-center mb-5 mt-2">
                   <thead className="border-b bg-zinc-600 text-white">
                     <tr>
                       <th className="w-20">#</th>
@@ -132,10 +132,10 @@ export default function IndexReports() {
                       <th className="border border-gray-300 text-theme-1 font-semibold text-md my-5 w-40">Asistencia</th>
                     </tr>
                   </thead>
-                  <tbody key={grupoID}>
+                  <tbody>
                     {Object.keys(reportes[`${grupoID}`]).filter(k => (k !== 'Ubicación' && k !== 'Conteo Pueblo' && k !== 'Fecha' && k !== 'Servicio')).map((k, index) => (
                           <>
-                            <tr key={k} className={reportes[`${grupoID}`][k] !== 'Asistió' ? `bg-red-100 text-red-800` : 'bg-green-100 text-green-800'}>
+                            <tr key={`${grupoID}-${index}`} id={`${grupoID}-${index}`} className={reportes[`${grupoID}`][k] !== 'Asistió' ? `bg-red-100 text-red-800` : 'bg-green-100 text-green-800'}>
                               <td className="border border-gray-300 py-2 my-4 mx-6 w-10">{index + 1}</td>
                               <td className="border border-gray-300 py-2 my-4 mx-6 w-60">{k}</td>
                               <td className="border border-gray-300 py-2 my-4 mx-6 w-40">{reportes[`${grupoID}`][k]}</td>
