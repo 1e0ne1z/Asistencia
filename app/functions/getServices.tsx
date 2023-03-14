@@ -5,7 +5,7 @@ export default async function getServices() {
 
   // console.log(`${process.env.AIRTABLE_URL}${groupID}?maxRecords=10&view=Grid%20view`);
   // console.log(`HEADERS: ${JSON.stringify(headers)}`);
-  const services_response = await fetch(`${process.env.AIRTABLE_URL}/Servicios?maxRecords=50&view=Grid%20view`,{
+  const services_response = await fetch(`${process.env.AIRTABLE_URL}/Servicios?maxRecords=100&view=Grid%20view`,{
     headers
   });
 
