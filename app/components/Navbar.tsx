@@ -2,6 +2,7 @@ import { useState } from "react";
 
 export default function NavBar() {
     const [navbar, setNavbar] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     return (
       <nav className="w-full bg-slate-800 shadow">
@@ -56,12 +57,41 @@ export default function NavBar() {
                 }`}
                 >
                 <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
-                    <li className="text-gray-200 hover:text-blue-600">
-                        <a href="/reports">Reportes</a>
-                    </li>
-                    <li className="text-gray-200 hover:text-blue-600">
-                        <a href="/metrics">Metricas</a>
-                    </li>
+                  {/* ------------DROPDOWN--------------- */}
+                  <li className="relative">
+                    <button
+                      className="text-gray-200 hover:text-blue-600"
+                      onClick={() => setDropdownOpen(!dropdownOpen)}
+                    >
+                      Reportes
+                    </button>
+                    {dropdownOpen && (
+                      <div className="absolute mt-2 w-48 bg-slate-800 rounded-md shadow-lg">
+                        <ul className="py-2">
+                          <li>
+                            <a
+                              href="/reports"
+                              className="block px-4 py-2 text-gray-200 hover:text-blue-600"
+                            >
+                              Privilegios
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              href="/absences"
+                              className="block px-4 py-2 text-gray-200 hover:text-blue-600"
+                            >
+                              Inasistencias
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
+                  </li>
+                  {/* ------------DROPDOWN--------------- */}
+                  <li className="text-gray-200 hover:text-blue-600">
+                      <a href="/metrics">Metricas</a>
+                  </li>
                 </ul>
               </div>
             </div>
