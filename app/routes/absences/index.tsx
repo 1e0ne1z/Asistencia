@@ -3,8 +3,6 @@ import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import getHistoricalReport from "~/functions/getHistoricReports";
 import getLeaders from "~/functions/getLeaders";
-import getReport from "~/functions/getReport";
-import getServices from "~/functions/getServices";
 
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -62,7 +60,7 @@ export default function IndexAbsences() {
           <label className="block text-gray-700 text-sm font-bold mb-2" >
               Porcentaje Mínimo(%)
             </label>
-            <input className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="threshold" type="number" min="0" max="50" />
+            <input className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="threshold" type="number" min="0" max="100" />
           </div>
           <br></br>
           <div className="flex items-center justify-between">
@@ -80,7 +78,7 @@ export default function IndexAbsences() {
           <h1 className="text-2xl">Reporte de Inasistencias de {start_date} a {end_date}</h1>
           <h2 className="text-xl"><span className="font-bold">Ayudas:</span> {leaders['Ayuda1']}, {leaders['Ayuda2']}</h2>
           <h2 className="text-xl"><span className="font-bold">Encargados:</span> {leaders['Encargado1']}, {leaders['Encargado2']}</h2>
-          <h2 className="text-xl"><span className="font-bold">Porcentaje mínimo: </span> {threshold}%</h2>
+          <h2 className="text-xl"><span className="font-bold">Porcentaje mínimo de asistencia: </span> {threshold}%</h2>
           <br />
           {Object.keys(reportes).map((grupoID, indx) => (
             <div key={grupoID}>

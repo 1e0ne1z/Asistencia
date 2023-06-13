@@ -81,7 +81,7 @@ export default function NavBar() {
                               href="/absences"
                               className="block px-4 py-2 text-gray-200 hover:text-blue-600"
                             >
-                              Inasistencias
+                              Asistencias
                             </a>
                           </li>
                         </ul>
