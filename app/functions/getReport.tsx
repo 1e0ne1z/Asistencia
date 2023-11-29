@@ -7,20 +7,16 @@ export default async function getReport(
     'Authorization': `Bearer ${process.env.API_KEY}`,
   }
 
-  console.log(service);
-
-  // console.log(`${process.env.AIRTABLE_URL}${groupID}?maxRecords=10&view=Grid%20view`);
+  // console.log(service);
+  // console.log(`${process.env.AIRTABLE_URL}${groupID}?maxRecords=120&view=Grid%20view`);
   // console.log(`HEADERS: ${JSON.stringify(headers)}`);
-  const group_response = await fetch(`${process.env.AIRTABLE_URL}/Grupo%20${groupID}?maxRecords=120&view=Grid%20view`,{
+  const group_response = await fetch(`${process.env.AIRTABLE_URL}/Grupo%20${groupID}?maxRecords=100&view=Grid%20view&sort%5B0%5D%5Bfield%5D=Fecha&sort%5B0%5D%5Bdirection%5D=desc`,{
     headers
   });
 
-  
   const group = await group_response.json()
-  
   // console.log(group);
-  console.log('----------------');
-
+  
   type reportType = {
     [key: string]: {}
   }
@@ -30,7 +26,7 @@ export default async function getReport(
   if(filtered.length > 0){
     report = filtered[0].fields;
   }
-  // console.log(report);
+  // console.log(Object.keys(report));
 
   let final_report: reportType = {}
 
