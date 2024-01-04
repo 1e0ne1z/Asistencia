@@ -21,9 +21,10 @@ export default async function getHistoricalReport(
   const start = Date.parse(startDate);
   const end = Date.parse(endDate);
   const filtered = services.records.filter((grupo: any) => Date.parse(grupo.fields.Fecha) <= end && Date.parse(grupo.fields.Fecha) >= start);
-  let membersRaw = Object.keys(services.records[services.records.length - 1].fields).filter((e: string) => !['Fecha', 'Ubicación', 'Servicio', 'Conteo Pueblo'].includes(e));
+  let membersRaw = Object.keys(services.records[0].fields).filter((e: string) => !['Fecha', 'Ubicación', 'Servicio', 'Conteo Pueblo'].includes(e));
   let members: any = {}
   let members_assistance: any = {}
+  // console.log(membersRaw);
   membersRaw.forEach((e: string) => members[e] = 0);
   membersRaw.forEach((e: string) => members_assistance[e] = 0);
 

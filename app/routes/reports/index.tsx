@@ -129,6 +129,7 @@ export default function IndexReports() {
                     <tr>
                       <th className="w-20">#</th>
                       <th className="border border-gray-300 text-theme-1 font-semibold text-md my-5 w-40">Siervo</th>
+                      <th className="border border-gray-300 text-theme-1 font-semibold text-md my-5 w-40">Telefono</th>
                       <th className="border border-gray-300 text-theme-1 font-semibold text-md my-5 w-40">Asistencia</th>
                     </tr>
                   </thead>
@@ -137,7 +138,8 @@ export default function IndexReports() {
                           <>
                             <tr key={`${grupoID}-${index}`} id={`${grupoID}-${index}`} className={reportes[`${grupoID}`][k] !== 'Asistió' ? `bg-red-100 text-red-800` : 'bg-green-100 text-green-800'}>
                               <td className="border border-gray-300 py-2 my-4 mx-6 w-10">{index + 1}</td>
-                              <td className="border border-gray-300 py-2 my-4 mx-6 w-60">{k}</td>
+                              <td className="border border-gray-300 py-2 my-4 mx-6 w-60">{k.split(",")[0]}</td>
+                              <td className="border border-gray-300 py-2 my-4 mx-6 w-60">{k.split(",")[1]}</td>
                               <td className="border border-gray-300 py-2 my-4 mx-6 w-40">{reportes[`${grupoID}`][k]}</td>
                             </tr>
                           </>

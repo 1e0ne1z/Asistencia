@@ -44,7 +44,7 @@ export default function IndexAbsences() {
   return (
     <div className="container mx-auto rounded-lg mt-10">
       <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-        <h1 className="text-2xl">Reporte de Inasistencias</h1>
+        <h1 className="text-2xl">Reporte de Asistencia</h1>
         <br />
         <Form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" method="get" >
           <div className="mb-4">
@@ -72,7 +72,7 @@ export default function IndexAbsences() {
       </div>
       {Object.keys(reportes).length > 0 && 
         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          <h1 className="text-2xl">Reporte de Inasistencias de {start_date} a {end_date}</h1>
+          <h1 className="text-2xl">Reporte de Asistencias de {start_date} a {end_date}</h1>
           <h2 className="text-xl"><span className="font-bold">Ayudas:</span> {leaders['Ayuda1']}, {leaders['Ayuda2']}</h2>
           <h2 className="text-xl"><span className="font-bold">Encargados:</span> {leaders['Encargado1']}, {leaders['Encargado2']}</h2>
           <br />
@@ -85,6 +85,7 @@ export default function IndexAbsences() {
                     <tr>
                       <th className="w-20">#</th>
                       <th className="border border-gray-300 text-theme-1 font-semibold text-md my-5 w-40">Siervo</th>
+                      <th className="border border-gray-300 text-theme-1 font-semibold text-md my-5 w-40">Telefono</th>
                       <th className="border border-gray-300 text-theme-1 font-semibold text-md my-5 w-40">Asistencia</th>
                       <th className="border border-gray-300 text-theme-1 font-semibold text-md my-5 w-40">Privilegios asistidos</th>
                       <th className="border border-gray-300 text-theme-1 font-semibold text-md my-5 w-40">Observaciones</th>
@@ -95,7 +96,8 @@ export default function IndexAbsences() {
                           <>
                             <tr key={`${k}${index}`} id={`${k}${index}`} >
                               <td className="border border-gray-300 py-2 my-4 mx-6 w-10">{index + 1}</td>
-                              <td className="border border-gray-300 py-2 my-4 mx-6 w-60">{k}</td>
+                              <td className="border border-gray-300 py-2 my-4 mx-6 w-60">{k.split(",")[0]}</td>
+                              <td className="border border-gray-300 py-2 my-4 mx-6 w-60">{k.split(",")[1]}</td>
                               <td className="border border-gray-300 py-2 my-4 mx-6 w-40">{reportes[`${grupoID}`][k]}%</td>
                               <td className="border border-gray-300 py-2 my-4 mx-6 w-40">{reportes_total[`${grupoID}`][k]}</td>
                               <td className="border border-gray-300 py-2 my-4 mx-6 w-60"><input className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name={k}  /></td>
